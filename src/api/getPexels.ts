@@ -1,6 +1,6 @@
 import { request } from "@/utils/https";
 
-interface IPexels {
+export interface IPexels {
   id: number;
   width: number;
   height: number;
@@ -23,8 +23,8 @@ interface IPexels {
   alt: string;
 }
 
-const getPexels = async (per_page: number) => {
-    const  pexels = await request<IPexels, {}>(`curated?per_page=${per_page}`, {});
+export const getPexels = async (per_page: number) => {
+  const pexels = await request<IPexels, {}>(`curated?per_page=${per_page}`, {});
 
-    return pexels;
+  return pexels;
 };

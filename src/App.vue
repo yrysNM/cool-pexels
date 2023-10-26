@@ -1,7 +1,14 @@
-<template>hello world</template>
+<template>
+  <Pexels />
+</template>
 
 <script lang="ts">
-export default {};
+import Pexels from "./components/PexelsView.vue"
+export default {
+  components: {
+    Pexels,
+  },
+}
 </script>
 
 <style lang="scss" scoped></style>
