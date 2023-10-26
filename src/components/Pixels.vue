@@ -10,7 +10,8 @@ export default {
       images: [],
     });
 
-    function getPexels() {}
+    function getPexels() {
+    }
   },
 };
 </script>
