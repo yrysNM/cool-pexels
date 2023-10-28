@@ -14,7 +14,7 @@ export const request = <T, B>(url: string, bodyData: B | null, method = "GET"): 
     method,
     headers: {
       "Content-Type": "application/json",
-      Authorization: process.env.VUE_APP_API_KEY,
+      Authorization: `${process.env.VUE_APP_API_KEY}`,
     },
   }
 

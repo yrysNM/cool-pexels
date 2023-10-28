@@ -1,5 +1,7 @@
 <template>
-  <Pexels />
+  <div class="main">
+    <Pexels />
+  </div>
 </template>
 
 <script lang="ts">
