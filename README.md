@@ -1,4 +1,4 @@
-# custom-extension-name
+# Cool-pexels
 
 ## Project setup
 ```
