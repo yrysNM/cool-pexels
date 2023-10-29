@@ -1,10 +1,5 @@
 <template>
-  <!-- <div class="masonry">
-    <div class="brick" v-for="(photo, i) in pexels.photos" :key="i">
-      <img :src="photo.src.original" :alt="photo.alt" class="img" />
-    </div>
-  </div> -->
-  <div class="photo-wrapper">
+  <div class="photo-wrapper" v-masonry transition-duration="0.3s" item-selector=".item" :origin-top="true" :horizontal-order="false">
     <div class="photo" v-for="(photo, i) in pexels.photos" :key="i">
       <img :src="photo.src.original" :alt="photo.alt" class="img" />
     </div>
@@ -12,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { reactive, onMounted } from "vue"
+import { reactive, onMounted, ref } from "vue"
 import { getPexels, IPexels } from "@/api/getPexels"
 
 export default {
@@ -22,12 +17,28 @@ export default {
         photos: [],
       },
     })
+    const count = ref(1)
 
     onMounted(() => {
-      getPexels(1).then((res) => {
-        state.pexels.photos = res.photos
-      })
+      window.addEventListener("scroll", handleScroll)
+      getPexelsPhotos()
     })
+
+    const handleScroll = () => {
+      let scrollHeight = window.scrollY
+      let maxHeight = window.document.body.scrollHeight - window.document.documentElement.clientHeight
+
+      if (scrollHeight >= maxHeight - 200) {
+        count.value += 1
+        getPexelsPhotos()
+      }
+    }
+
+    const getPexelsPhotos = () => {
+      getPexels(count.value).then((res) => {
+        state.pexels.photos = state.pexels.photos.concat(JSON.parse(JSON.stringify(res.photos)))
+      })
+    }
 
     return {
       ...state,
@@ -53,31 +64,6 @@ export default {
       object-position: center center;
       object-fit: contain;
     }
-  }
-}
-
-.masonry > * {
-  break-inside: avoid;
-  margin-bottom: 1rem;
-}
-
-.masonry {
-  column-gap: 1rem;
-  column-fill: initial;
-  column-width: 180px;
-}
-
-@supports (grid-template-rows: masonry) {
-  .masonry {
-    display: grid;
-    gap: 1rem;
-    grid-template-rows: masonry;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    align-tracks: stretch;
-  }
-
-  .masonry > * {
-    margin-bottom: initial;
   }
 }
 </style>
